@@ -138,7 +138,7 @@ def run(
             op = Path(f"{output_path}/model.nam")
             op_filename = model_name.split('/')
             op.rename(f"{output_path}/{op_filename[-1].replace('.wav', '')}.nam")
-            cp op out_path
+            cp f"{output_path}/{op_filename[-1].replace('.wav', '')}.nam" out_path
         else:
             model_export_outdir = _get_valid_export_directory()
             model_export_outdir.mkdir(parents=True, exist_ok=False)
