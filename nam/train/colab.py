@@ -15,8 +15,6 @@ from ._version import PROTEUS_VERSION, Version
 from .core import TrainOutput, train
 from .metadata import TRAINING_KEY
 
-import shutil
-
 __all__ = ["run"]
 
 
@@ -141,7 +139,6 @@ def run(
             op_filename = model_name.split('/')
             rename_name = f"{output_path}/{op_filename[-1].replace('.wav', '')}.nam"
             op.rename(rename_name)
-            shutil.copy(rename_name, out_path)
         else:
             model_export_outdir = _get_valid_export_directory()
             model_export_outdir.mkdir(parents=True, exist_ok=False)
