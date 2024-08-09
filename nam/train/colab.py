@@ -26,7 +26,7 @@ _OUTPUT_BASENAME = "output.wav"
 _TRAIN_PATH = "."
 
 
-def _check_for_files(input_file) -> Tuple[Version, str]:
+def _check_for_files(input_file, model_name) -> Tuple[Version, str]:
     # TODO use hash logic as in GUI trainer!
     print("Checking that we have all of the required audio files...")
     if input_file != "":
@@ -58,7 +58,7 @@ def _check_for_files(input_file) -> Tuple[Version, str]:
         )
     if not Path(_OUTPUT_BASENAME).exists():
         raise FileNotFoundError(
-            f"Didn't find your reamped output audio file. Please upload {_OUTPUT_BASENAME}."
+            f"Didn't find your reamped output audio file. Please upload {model_name}."
         )
     if input_version != PROTEUS_VERSION:
         print(f"Found {input_basename}, version {input_version}")
@@ -105,7 +105,7 @@ def run(
     :param ignore_checks: Ignores the data quality checks and YOLOs it
     """
 
-    input_version, input_basename = _check_for_files(input_file)
+    input_version, input_basename = _check_for_files(input_file, model_name)
 
     train_output: TrainOutput = train(
         input_basename,
