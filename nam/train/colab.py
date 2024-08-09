@@ -107,6 +107,8 @@ def run(
 
     input_version, input_basename = _check_for_files(input_file, model_name)
 
+    print(f"Processing {model_name}")
+
     train_output: TrainOutput = train(
         input_basename,
         model_name,
@@ -138,6 +140,7 @@ def run(
             op = Path(f"{output_path}/model.nam")
             op_filename = model_name.split('/')
             rename_name = f"{output_path}/{op_filename[-1].replace('.wav', '')}.nam"
+            print(f"Exported {rename_name}")
             op.rename(rename_name)
         else:
             model_export_outdir = _get_valid_export_directory()
