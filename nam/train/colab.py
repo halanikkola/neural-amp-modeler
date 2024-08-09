@@ -26,7 +26,7 @@ _OUTPUT_BASENAME = "output.wav"
 _TRAIN_PATH = "."
 
 
-def _check_for_files() -> Tuple[Version, str]:
+def _check_for_files(input_file) -> Tuple[Version, str]:
     # TODO use hash logic as in GUI trainer!
     print("Checking that we have all of the required audio files...")
     if input_file != "":
@@ -105,7 +105,7 @@ def run(
     :param ignore_checks: Ignores the data quality checks and YOLOs it
     """
 
-    input_version, input_basename = _check_for_files()
+    input_version, input_basename = _check_for_files(input_file)
 
     train_output: TrainOutput = train(
         input_basename,
