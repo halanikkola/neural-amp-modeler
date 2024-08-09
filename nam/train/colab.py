@@ -29,6 +29,13 @@ _TRAIN_PATH = "."
 def _check_for_files() -> Tuple[Version, str]:
     # TODO use hash logic as in GUI trainer!
     print("Checking that we have all of the required audio files...")
+    if input_file != "":
+        input_basename = input_file
+        print(f"using file: {input_file}")
+        if "v2_0_0.wav" not in input_file: 
+            return Version(2,0,0), input_file
+        else:
+            return Version(3,0,0), input_file
     for name in _BUGGY_INPUT_BASENAMES:
         if Path(name).exists():
             raise RuntimeError(
@@ -71,6 +78,7 @@ def _get_valid_export_directory():
 
 
 def run(
+    model_name: "output.wav",
     epochs: int = 100,
     delay: Optional[int] = None,
     model_type: str = "WaveNet",
@@ -81,6 +89,8 @@ def run(
     user_metadata: Optional[UserMetadata] = None,
     ignore_checks: bool = False,
     fit_cab: bool = False,
+    input_file = "",
+    out_path = ""
 ):
     """
     :param epochs: How many epochs we'll train for.
@@ -120,11 +130,21 @@ def run(
         print("No model returned; skip exporting!")
     else:
         print("Exporting your model...")
-        model_export_outdir = _get_valid_export_directory()
-        model_export_outdir.mkdir(parents=True, exist_ok=False)
-        model.net.export(
-            model_export_outdir,
-            user_metadata=user_metadata,
-            other_metadata={TRAINING_KEY: training_metadata.model_dump()},
-        )
+        if(out_path != ""):
+            output_path = out_path
+            model_export_outdir = Path(output_path)
+            model_export_outdir.mkdir(parents=True, exist_ok=True)
+            model.net.export(model_export_outdir, user_metadata=user_metadata)
+            op = Path(f"{output_path}/model.nam")
+            op_filename = model_name.split('/')
+            op.rename(f"{output_path}/{op_filename[-1].replace('.wav', '')}.nam")
+            !cp op out_path
+        else:
+            model_export_outdir = _get_valid_export_directory()
+            model_export_outdir.mkdir(parents=True, exist_ok=False)
+            model.net.export(
+                model_export_outdir,
+                user_metadata=user_metadata,
+                other_metadata={TRAINING_KEY: training_metadata.model_dump()},
+            )
         print(f"Model exported to {model_export_outdir}. Enjoy!")
