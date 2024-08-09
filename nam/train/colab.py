@@ -109,7 +109,7 @@ def run(
 
     train_output: TrainOutput = train(
         input_basename,
-        _OUTPUT_BASENAME,
+        model_name,
         _TRAIN_PATH,
         input_version=input_version,
         epochs=epochs,
