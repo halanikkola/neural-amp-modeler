@@ -15,6 +15,8 @@ from ._version import PROTEUS_VERSION, Version
 from .core import TrainOutput, train
 from .metadata import TRAINING_KEY
 
+import shutil
+
 __all__ = ["run"]
 
 
