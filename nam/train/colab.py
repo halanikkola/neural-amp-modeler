@@ -33,9 +33,9 @@ def _check_for_files(input_file, model_name) -> Tuple[Version, str]:
         input_basename = input_file
         print(f"using file: {input_file}")
         if "v2_0_0.wav" not in input_file: 
-            return Version(2,0,0), input_file
-        else:
             return Version(3,0,0), input_file
+        else:
+            return Version(2,0,0), input_file
     for name in _BUGGY_INPUT_BASENAMES:
         if Path(name).exists():
             raise RuntimeError(
