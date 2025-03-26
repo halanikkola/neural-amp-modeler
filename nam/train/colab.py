@@ -136,7 +136,7 @@ def run(
             output_path = out_path
             model_export_outdir = Path(output_path)
             model_export_outdir.mkdir(parents=True, exist_ok=True)
-            model.net.export(model_export_outdir, user_metadata=user_metadata)
+            model.net.export(model_export_outdir, user_metadata=user_metadata, other_metadata={TRAINING_KEY: training_metadata.model_dump()})
             op = Path(f"{output_path}/model.nam")
             op_filename = model_name.split('/')
             rename_name = f"{output_path}/{op_filename[-1].replace('.wav', '')}.nam"
